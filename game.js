@@ -25,6 +25,7 @@ class Game {
         this.combo = 0;
         this.maxCombo = 0;
         this.hitFeedback = []; // { x, y, text, time }
+        this.nextNoteIndex = 0;
 
         this.scoreElement = document.getElementById('score');
         this.comboElement = document.getElementById('combo');
@@ -75,6 +76,7 @@ class Game {
         this.maxCombo = 0;
         this.activeNotes.clear();
         this.hitFeedback = [];
+        this.nextNoteIndex = 0;
         this.updateHUD();
         this.endScreen.classList.add('hidden');
         this.hud.classList.remove('hidden');
@@ -160,10 +162,12 @@ class Game {
         const lookaheadTime = this.canvas.height / this.noteSpeed;
 
         // Spawn new notes
-        for (const note of this.notes) {
-            if (!this.activeNotes.has(note.id) && note.time >= currentTime && note.time < currentTime + lookaheadTime) {
+        while (this.nextNoteIndex < this.notes.length && this.notes[this.nextNoteIndex].time < currentTime + lookaheadTime) {
+            const note = this.notes[this.nextNoteIndex];
+            if (!this.activeNotes.has(note.id)) {
                 this.activeNotes.set(note.id, { ...note });
             }
+            this.nextNoteIndex++;
         }
 
         const feedbackDuration = 500; // ms
