@@ -56,7 +56,11 @@ class Game {
             this.reset();
             this.gameState = 'PLAYING';
             this.renderer.setLoading(false);
+            
+            // Small delay to ensure Tone.js is ready
+            await new Promise(resolve => setTimeout(resolve, 100));
             await this.audio.playMusic();
+            
             this.lastTime = performance.now();
             requestAnimationFrame(this.gameLoop.bind(this));
         } catch (error) {

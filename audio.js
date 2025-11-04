@@ -41,7 +41,7 @@ class AudioManager {
             await Tone.start();
         }
         if (this.player.state !== 'started') {
-            this.player.start();
+            this.player.start(Tone.now());
         }
     }
 
@@ -52,8 +52,9 @@ class AudioManager {
     }
 
     getCurrentTime() {
-        if (this.player) {
-            return this.player.now();
+        if (this.player && this.player.state === 'started') {
+            // Get the player's current position in the buffer
+            return this.player.immediate();
         }
         return 0;
     }
