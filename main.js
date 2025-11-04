@@ -19,7 +19,4 @@ window.addEventListener('load', () => {
 
     startButton.addEventListener('click', startGame);
     restartButton.addEventListener('click', startGame);
-
-    // Initial resize
-    game.resize();
 });
