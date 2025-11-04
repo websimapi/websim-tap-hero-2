@@ -54,7 +54,8 @@ class AudioManager {
     getCurrentTime() {
         if (this.player && this.player.state === 'started') {
             // Get the player's current position in the buffer
-            return this.player.immediate();
+            const elapsed = this.player.context.currentTime - this.player.scheduledTime;
+            return Math.max(0, elapsed);
         }
         return 0;
     }

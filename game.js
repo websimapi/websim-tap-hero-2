@@ -183,7 +183,8 @@ class Game {
         }
 
         // Check for end of song
-        if (this.activeNotes.size === 0 && currentTime > this.notes[this.notes.length - 1].time + 2) {
+        const lastNote = this.notes[this.notes.length - 1];
+        if (lastNote && this.activeNotes.size === 0 && currentTime > lastNote.time + 2) {
             this.endGame();
         }
     }
